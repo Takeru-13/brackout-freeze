@@ -1,0 +1,184 @@
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+}
+
+#initial-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  z-index: 1;
+}
+
+#initial-content h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+#initial-content .slot-reels {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 2rem;
+}
+
+#initial-content .reel {
+  width: 80px;
+  height: 100px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  backdrop-filter: blur(10px);
+}
+
+#initial-content p {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+#freeze-fx {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease-out;
+}
+
+.shrink {
+  animation: freezeShrinkY 0.25s cubic-bezier(.95,0,.05,1.5) forwards;
+}
+
+@keyframes freezeShrinkY {
+  0% { transform: scaleY(1); filter: brightness(1) contrast(1);}
+  70% { transform: scaleY(0.02); filter: brightness(1.3) contrast(1.2);}
+  100% { transform: scaleY(0.005); filter: brightness(1.5) contrast(1.3);}
+}
+
+/* 横光線 */
+#freeze-bar {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 40px;
+  background:
+    radial-gradient(ellipse at 50% 50%, #fff 0% 40%, #51e7ff 62%, #1d9fff 80%, transparent 95%),
+    linear-gradient(90deg,
+      transparent 0%,
+      #fff 20%,
+      #fff 45%,
+      #fff 49%,
+      #fff 51%,
+      #51e7ff 65%,
+      transparent 100%
+    );
+  box-shadow: 
+    0 0 120px 38px #fff,
+    0 0 80px 22px #8be8ff,
+    0 0 44px 14px #51e7ff,
+    0 0 25px 11px #fff,
+    0 0 160px 50px #00d0ff33;
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(0.9px);
+  z-index: 11;
+  transition: opacity 0.13s;
+}
+#freeze-bar.show {
+  opacity: 1;
+}
+
+/* 縦光線（中央ぶっとく両端細く・目立つ） */
+#freeze-bar-vertical {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 140vh;
+  z-index: 10000;
+  background:
+    radial-gradient(ellipse at 50% 50%, #fff 0% 40%, #51e7ff 62%, #1d9fff 80%, transparent 95%),
+    linear-gradient(180deg,
+      transparent 0%,
+      #fff 20%,
+      #fff 45%,
+      #fff 49%,
+      #fff 51%,
+      #51e7ff 65%,
+      transparent 100%
+    );
+  box-shadow: 
+    0 0 120px 38px #fff,
+    0 0 80px 22px #8be8ff,
+    0 0 44px 14px #51e7ff,
+    0 0 25px 11px #fff,
+    0 0 160px 50px #00d0ffae;
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(0.9px);
+  z-index: 11;
+  transition: opacity 0.13s;
+}
+#freeze-bar-vertical.show {
+  opacity: 1;
+}
+
+
+/* メインコンテンツ */
+#main-content {
+  padding: 2rem;
+  color: #333;
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-content h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #0099ff, #333333, #00ccff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 153, 255, 0.2);
+}
+
+#main-content p {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* レスポンシブ（スマホ） */
+@media (max-width: 768px) {
+  #freeze-bar { height: 32px; }
+  #freeze-bar-vertical { width: 12px; }
+  #main-content h1 { font-size: 2rem; }
+  #main-content p { font-size: 1rem; }
+}
+
+
+
