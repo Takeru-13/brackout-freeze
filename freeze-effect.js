@@ -1,30 +1,32 @@
-window.addEventListener("DOMContentLoaded", () => {
-  const freezeFx = document.getElementById("freeze-fx");
-  const freezeBar = document.getElementById("freeze-bar");
-  const freezeBarVertical = document.getElementById("freeze-bar-vertical");
-  const mainContent = document.getElementById("main-content");
+const btn = document.getElementById('pushun-btn');
+const body = document.body;
+const laserLayer = document.getElementById('laser-layer');
 
-  // 1. 一瞬で中央横線にギュッと収縮
-  freezeFx.classList.add("shrink");
+btn.addEventListener('click', () => {
+  // 一度リセット
+  body.classList.remove('pushed', 'fadeout');
+  laserLayer.classList.remove('active', 'crt-fx', 'shrink');
 
-  // 収縮開始と同時に背景を黒に
-  document.body.style.background = "#000";
-  freezeFx.style.background = "#000";
-
-  // 2. 収縮完了後、横線バー＋縦グロー表示
+  // 0.1秒後、黒幕とクロス線出現・内容フェード
   setTimeout(() => {
-    freezeBar.classList.add("show");
-    freezeBarVertical.classList.add("show");
-  }, 250); // 収縮アニメの時間に合わせる
-
-  // 3. 横線・縦線をすばやく消して本体へ
-  setTimeout(() => {
-    freezeBar.classList.remove("show");
-    freezeBarVertical.classList.remove("show");
+    body.classList.add('pushed');
+    laserLayer.classList.add('active');
+    // 0.08秒後、クロス線収束
     setTimeout(() => {
-      freezeFx.style.display = "none";
-      mainContent.style.display = "flex";
-      document.body.style.overflow = "auto";
-    }, 180); // hideトランジション終了
-  }, 1200); // 光線を出してから消えるまでの秒数（余韻を長く）
+      laserLayer.classList.add('crt-fx');
+      // 0.13秒後、クロス線消滅
+      setTimeout(() => {
+        laserLayer.classList.add('shrink');
+        // 0.19秒後、全体フェードアウト
+        setTimeout(() => {
+          body.classList.add('fadeout');
+          // 1.2秒後、自動リセット
+          setTimeout(() => {
+            body.classList.remove('pushed', 'fadeout');
+            laserLayer.classList.remove('active', 'crt-fx', 'shrink');
+          }, 1200);
+        }, 190);
+      }, 130);
+    }, 80);
+  }, 100);
 });
