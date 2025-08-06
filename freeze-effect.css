@@ -1,5 +1,4 @@
 :root {
-  /* メインで使う色（クロス線やグローに使用） */
   --color-main: #b18cff;       /* 明るい紫 */
   --color-deep: #6751e3;       /* 濃い紫 */
   --color-bg: #f6f8fb;         /* ページ背景 */
@@ -24,41 +23,158 @@ body {
   position: relative;
 }
 
-/* --- 中央のカード部分（コンテンツ本体） --- */
-.container {
-  max-width: 680px;
-  margin: 72px auto 48px;
-  padding: 36px 28px;
-  background: #fff;
-  border-radius: 22px;
-  box-shadow: 0 6px 28px 0 #bbc6e933, 0 1px 8px 0 #b6b6b677;
-  text-align: left;
-  z-index: 1;
-  position: relative;
-  /* プシュン中のブラー＆透明度のためのトランジション */
-  transition: filter 0.14s, opacity 0.2s;
-}
-/* プシュン演出中はぼかし＋薄く */
-body.pushed .container {
-  filter: blur(2.3px) brightness(1.13) grayscale(0.27);
-  opacity: 0.34;
-}
+/* ==========================
+   パチスロ PUSHボタン本体（青ver.）
+========================== */
+    .slot-btn {
+      position: relative;
+      display: inline-block;
+      width: 240px;
+      height: 90px;
+      background:
+        linear-gradient(180deg, #f0faff 0 8%, transparent 14% 22%, #1e90ff 23% 98%, #143d7e 100%),
+        linear-gradient(180deg, #e3f0fd 0 23%, #6ac2ff 39%, #0d7edb 89%, #14296c 100%);
+      border: none;
+      border-radius: 25px 25px 25px 25px / 18px 18px 22px 22px;
+      box-shadow:
+        0 8px 40px #1e90ff33,
+        0 0 0 8px #e5eefe,
+        0 0 0 16px #1e62be55,
+        0 15px 35px #2163ff33,
+        0 2px 0 #fff,
+        0 4px 0 0 #0d479e inset,
+        0 18px 35px #10469344 inset;
+      cursor: pointer;
+      outline: none;
+      overflow: hidden;
+      z-index: 10;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: scale(1);
+    }
 
-/* --- プシュンボタン --- */
-#pushun-btn {
-  margin-top: 44px;
-  padding: 18px 56px;
-  background:#221f46;
-  color: #fff;
-  border: none;
-  border-radius: 38px;
-  font-size: 1.26rem;
-  font-weight: bold;
+    .slot-btn::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 25px / 20px;
+      border: 5px solid #e2e2e2;
+      box-shadow:
+        0 0 20px #fff8,
+        0 0 5px #b1a685,
+        inset 0 0 20px rgba(255,255,255,0.1);
+      background:
+        linear-gradient(90deg, #f7f7fa 0%, #b1b1be 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .slot-btn::after {
+      content: "";
+      position: absolute;
+      left: 10%; top: 8%;
+      width: 80%; height: 30%;
+      background: linear-gradient(180deg, #fff 50%, #fff3 100%);
+      border-radius: 50% 50% 30% 30% / 70% 70% 40% 40%;
+      opacity: 0.95;
+      filter: blur(1px);
+      pointer-events: none;
+      z-index: 3;
+      transition: opacity 0.3s;
+    }
+
+    .slot-btn:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 12px 50px #1e90ff44,
+        0 0 0 10px #e5eefe,
+        0 0 0 18px #1e62be66,
+        0 20px 40px #2163ff44;
+    }
+
+    .slot-btn:active {
+      transform: scale(0.98);
+      background:
+        linear-gradient(180deg, #fff 0 8%, transparent 14% 22%, #61b6ff 23% 98%, #295cb0 100%),
+        linear-gradient(180deg, #e3f0fd 0 24%, #89d1ff 38%, #1979c6 89%, #1c4077 100%);
+      box-shadow:
+        0 0 30px #61b6ffdd,
+        0 0 0 12px #cce6ff9a,
+        0 8px 25px #1e90ff50;
+    }
+
+    .slot-btn:active::after {
+      opacity: 0.6;
+    }
+
+    /* Enhanced PUSH Text */
+    .slot-text {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Impact, 'Arial Black', sans-serif;
+      font-size: 3rem;
+      color: #fffdf7;
+      letter-spacing: 0.15em;
+      padding: 0 35px;
+      text-shadow:
+        0 3px 3px #123e8e,
+        0 0 35px #fff,
+        0 0 15px #fff9,
+        2px 2px 0 #104488,
+        -2px 1px 0 #fff,
+        0 0 6px #fff,
+        0 0 15px #fff5;
+      background: linear-gradient(180deg, #22fff8 0% 40%, #168dfd 55%, #7ebcf7 100%);
+      border-radius: 12px;
+      border: 3px solid #fff2;
+      box-shadow: 
+        0 0 25px #8ad5ffcc,
+        inset 0 2px 10px rgba(255,255,255,0.3);
+      user-select: none;
+      pointer-events: none;
+      filter: drop-shadow(0 0 12px #fff7);
+      transition: all 0.15s;
+    }
+
+    .slot-btn:active .slot-text {
+      filter: brightness(1.3) blur(0.8px) drop-shadow(0 0 20px #fff);
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+
+
+/* --- PUSHロゴ中央 --- */
+.slot-text {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Impact, 'Arial Black', sans-serif;
+  font-size: 2.5rem;
+  color: #fffdf7;
   letter-spacing: 0.1em;
-  box-shadow: 0 2px 10px #6d5ed733;
-  cursor: pointer;
-  z-index: 2;
-  position: relative;
+  padding: 0 28px 0 28px;
+  text-shadow:
+    0 2px 2px #123e8e,
+    0 0 28px #fff,
+    0 0 12px #fff7,
+    1.3px 1.6px 0 #104488,
+    -1.2px 0.5px 0 #fff,
+    0 0 4px #fff,
+    0 0 12px #fff3;
+  background: linear-gradient(180deg, #fff 0% 45%, #daedff 60%, #7ebcf7 100%);
+  border-radius: 10px;
+  border: 2.5px solid #fff1;
+  box-shadow: 0 0 17px #8ad5ffb7;
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 0 9px #fff5);
+  transition: filter 0.12s;
+}
+.slot-btn:active .slot-text {
+  filter: brightness(1.19) blur(0.7px);
 }
 
 /* ==========================
@@ -70,13 +186,11 @@ body.pushed .container {
   background: var(--color-blackout);
   z-index: 110;
   height: 0;
-  /* heightで開閉アニメ。もともと0→プシュンで52vhに */
   transition: height 0.07s cubic-bezier(.7,0,.2,1.24);
   pointer-events: none;
 }
 #blackout-top { top: 0; }
 #blackout-bottom { bottom: 0; }
-/* プシュン中は上下ともにheight:52vhで中央を残して画面を覆う */
 body.pushed .blackout-panel { height: 52vh; }
 
 /* ==========================
@@ -84,38 +198,87 @@ body.pushed .blackout-panel { height: 52vh; }
 ========================== */
 #laser-layer {
   position: fixed;
-  inset: 0; /* left:0;top:0;right:0;bottom:0;の省略形 */
+  inset: 0;
   pointer-events: none;
   z-index: 120;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transition: opacity 0.13s cubic-bezier(.74,0,.5,1.1);
+  transition: opacity 0.23s cubic-bezier(.74,0,.5,1.1);
 }
-/* クロス線表示中のフェードイン */
+/* ===== 光線フラッシュ＆火花・チラつきアニメ ===== */
+@keyframes laser-flash {
+  0%   { filter: brightness(2.6); }
+  28%  { filter: brightness(1.5); }
+  65%  { filter: brightness(1.13);}
+  100% { filter: brightness(1);   }
+}
+@keyframes spark-flash {
+  0% {
+    box-shadow:
+      0 0 48px 18px #fff,
+      0 0 28px 7px #ffe35a,
+      0 0 16px 2px #fff,
+      0 0 80px 18px #fff9;
+  }
+  40% {
+    box-shadow:
+      0 0 24px 8px #fff9,
+      0 0 12px 3px #ffe35a99,
+      0 0 4px 1px #fff;
+  }
+  100% {
+    box-shadow:
+      0 0 8px 2px #fff3,
+      0 0 0 0 #ffe35a00;
+  }
+}
+
+/* shrink時にレーザーにフラッシュ＋火花（横・縦線） */
+#laser-layer.shrink #laser-horizontal,
+#laser-layer.shrink #laser-vertical {
+  animation: laser-flash 0.21s cubic-bezier(.72,0,.42,1.12),
+             spark-flash 0.11s cubic-bezier(.8,0,.2,1.2);
+  opacity: 0;
+  filter: blur(36px);
+}
+/* shrink時にグローだけ明るさアニメ */
+#laser-layer.shrink #laser-core {
+  animation: laser-flash 0.22s cubic-bezier(.72,0,.42,1.12);
+  opacity: 0;
+  filter: blur(36px);
+}
+
+@keyframes laser-flash {
+  0%   { filter: brightness(2.6); }
+  28%  { filter: brightness(1.5); }
+  65%  { filter: brightness(1.15);}
+  100% { filter: brightness(1);   }
+}
+
+
 #laser-layer.active { opacity: 1; transition: opacity 0.08s; }
-/* クロス線・グロー消滅（収束しつつ消えるとき） */
 #laser-layer.shrink #laser-horizontal,
 #laser-layer.shrink #laser-vertical,
 #laser-layer.shrink #laser-core {
   opacity: 0;
   filter: blur(36px);
 }
-/* クロス線3要素（共通：通常時のぼかしとフェード） */
 #laser-horizontal, #laser-vertical, #laser-core {
+  animation: laser-flash 0.25s cubic-bezier(.75,0,.6,1.1);
   opacity: 1;
   filter: blur(1.2px);
-  transition: opacity 0.17s, filter 0.22s;
+    transition:
+    opacity 0.45s cubic-bezier(.77,0,.28,1.13),
+    filter 0.43s cubic-bezier(.77,0,.28,1.13),
+    height 0.40s cubic-bezier(.77,0,.28,1.13), filter 0.22s;
 }
-
-/* --- 横線（白+紫グラデ、光る線） --- */
 #laser-horizontal {
   position: absolute;
   top: 50%; left: 0;
   width: 100vw; height: 4.4px;
   transform: translateY(-50%);
-  /* 線の色。ここを好きなグラデに変更可能 */
   background: linear-gradient(90deg,
     var(--color-deep) 0%,
     var(--color-main) 14%,
@@ -124,27 +287,23 @@ body.pushed .blackout-panel { height: 52vh; }
     var(--color-main) 86%,
     var(--color-deep) 100%
   );
-  /* 発光感のためのshadow */
-  box-shadow: 0 0 38px 12px var(--color-shadow),
-              0 0 74px 15px #fff7,
-              0 0 20px 5px #fff;
+  box-shadow:
+    0 0 38px 12px #fff7,           /* 紫影→白だけ残す */
+    0 0 74px 15px #fff7,
+    0 0 20px 5px #fff;
   border-radius: 14px;
   z-index: 2;
   transition: height 0.12s;
 }
-/* 収束アニメ時：線が細く&シャドウ縮小 */
 #laser-layer.crt-fx #laser-horizontal {
   height: 1.5px;
-  box-shadow: 0 0 18px 6px #b18cff77, 0 0 34px 7px #fff3, 0 0 7px 2px #fff;
+  box-shadow: 0 0 18px 6px #ff00d077, 0 0 34px 7px rgba(255, 255, 255, 0.466), 0 0 10px 5px #fff;
 }
-
-/* --- 縦線（中央の白い縦光線） --- */
 #laser-vertical {
   position: absolute;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
   width: 3.2px; height: 44px;
-  /* 縦の線もグラデで色変更可 */
   background: linear-gradient(180deg,
     var(--color-deep) 0%,
     var(--color-white) 25%,
@@ -157,46 +316,38 @@ body.pushed .blackout-panel { height: 52vh; }
   z-index: 2;
   transition: height 0.12s;
 }
-/* 収束アニメ時：短く細く */
 #laser-layer.crt-fx #laser-vertical { height: 9px; }
-
-/* --- コア（中心のグロー、楕円型） --- */
 #laser-core {
   position: absolute;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%) scale(1.17, 0.97);
   width: 25px; height: 22px;
-  /* 中心の色・外縁のグラデを変更したい場合ここ */
   background: radial-gradient(ellipse at center,
-    var(--color-white) 0% 69%,
+    var(--color-white) 0% 100%,
     var(--color-main) 95%,
     rgba(197,165,255,0) 100%
   );
   box-shadow: 0 0 74px 23px var(--color-shadow),
               0 0 210px 48px #fff6;
   border-radius: 50%;
-  opacity: 0.85;
+  opacity: 0.99;
   z-index: 1;
   transition: opacity 0.08s, box-shadow 0.12s, transform 0.13s;
 }
-/* 収束アニメ時：縮小・消滅 */
 #laser-layer.crt-fx #laser-core {
   opacity: 0.21;
   transform: translate(-50%, -50%) scale(0.68, 0.38);
-  box-shadow: 0 0 24px 8px #b18cff66;
+  box-shadow: 0 0 24px 8px #ffffff;
 }
 
 /* ==========================
    プシュン後の画面全体フェード
 ========================== */
-/* containerもボタンも薄く消える */
-body.fadeout .container,
-body.fadeout #pushun-btn {
+body.fadeout .slot-btn {
   opacity: 0;
-  transition: opacity 0.22s;
+  transition: opacity 1.22s;
 }
-/* クロス線も消える */
 body.fadeout #laser-layer {
   opacity: 0;
-  transition: opacity 0.21s;
+  transition: opacity 1.21s;
 }
